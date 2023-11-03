@@ -10,6 +10,7 @@ namespace ShoeStore.Controllers
     public class ProductsController : ControllerBase
     {
         public static List<Products> products = new List<Products>();
+        public static int id = 0;
         // GET: api/<ProductsController>
         [HttpGet]
         public ActionResult<IEnumerable<Products>> Get()
@@ -33,6 +34,8 @@ namespace ShoeStore.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Products p)
         {
+            id++;
+            p.Id = id;
             products.Add(p);
             return Ok();
         }
