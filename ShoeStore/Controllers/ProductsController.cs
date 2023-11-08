@@ -9,22 +9,26 @@ namespace ShoeStore.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        public static List<Products> products = new List<Products>();
+        private readonly DataContext _context;
         public static int id = 0;
+        public ProductsController(DataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<ProductsController>
         [HttpGet]
-        public ActionResult<IEnumerable<Products>> Get()
+        public ActionResult<IEnumerable<Product>> Get()
         {
-            if (products == null)
+            if (_context.products == null)
                 return NotFound();
-            return products;
+            return _context.products;
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public ActionResult<Products> Get(int id)
+        public ActionResult<Product> Get(int id)
         {
-            var product = products.Find(x => x.Id == id);
+            var product = _context.products.Find(x => x.Id == id);
             if (product == null)
                 return NotFound();
             return product;
@@ -32,23 +36,24 @@ namespace ShoeStore.Controllers
 
         // POST api/<ProductsController>
         [HttpPost]
-        public ActionResult Post([FromBody] Products p)
+        public ActionResult Post([FromBody] Product p)
         {
             id++;
             p.Id = id;
-            products.Add(p);
+            _context.products.Add(p);
             return Ok();
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Products p)
+        public ActionResult Put(int id, [FromBody] Product p)
         {
-            var product = products.Find(x => x.Id == id);
+            var product = _context.products.Find(x => x.Id == id);
             if (product == null)
                 return NotFound(id);
-            products.Remove(product);
-            products.Add(p);
+            p.Id = product.Id;
+            _context.products.Remove(product);
+            _context.products.Add(p);
             return Ok();
         }
 
@@ -56,10 +61,10 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var product = products.Find(x => x.Id == id);
+            var product = _context.products.Find(x => x.Id == id);
             if (product == null)
                 return NotFound();
-            products.Remove(product);
+            _context.products.Remove(product);
             return Ok();
         }
     }

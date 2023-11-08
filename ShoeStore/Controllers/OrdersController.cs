@@ -9,22 +9,26 @@ namespace ShoeStore.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        public static List<Orders> orders = new List<Orders>();
+        private readonly DataContext _context;
         public static int id = 0;
+        public OrdersController(DataContext context)
+        {
+            _context = context;
+        }
         // GET: api/<OrdersController>
         [HttpGet]
-        public ActionResult<IEnumerable<Orders>> Get()
+        public ActionResult<IEnumerable<Order>> Get()
         {
-            if (orders == null)
+            if (_context.orders == null)
                 return NotFound();
-            return orders;
+            return _context.orders;
         }
 
         // GET api/<OrdersController>/5
         [HttpGet("{id}")]
-        public ActionResult<Orders> Get(int id)
+        public ActionResult<Order> Get(int id)
         {
-            var order = orders.Find(x => x.Id == id);
+            var order = _context.orders.Find(x => x.Id == id);
             if (order == null)
                 return NotFound();
             return order;
@@ -32,23 +36,24 @@ namespace ShoeStore.Controllers
 
         // POST api/<OrdersController>
         [HttpPost]
-        public ActionResult Post([FromBody] Orders o)
+        public ActionResult Post([FromBody] Order o)
         {
             id++;
             o.Id = id;
-            orders.Add(o);
+            _context.orders.Add(o);
             return Ok();
         }
 
         // PUT api/<OrdersController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Orders o)
+        public ActionResult Put(int id, [FromBody] Order o)
         {
-            var order = orders.Find(x => x.Id == id);
+            var order = _context.orders.Find(x => x.Id == id);
             if (order == null)
                 return NotFound(id);
-            orders.Remove(order);
-            orders.Add(o);
+            o.Id = order.Id;
+            _context.orders.Remove(order);
+            _context.orders.Add(o);
             return Ok();
         }
 
@@ -56,10 +61,10 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var order = orders.Find(x => x.Id == id);
+            var order = _context.orders.Find(x => x.Id == id);
             if (order == null)
                 return NotFound();
-            orders.Remove(order);
+            _context.orders.Remove(order);
             return Ok();
         }
     }
