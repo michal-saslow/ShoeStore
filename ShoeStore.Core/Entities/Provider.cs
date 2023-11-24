@@ -1,4 +1,4 @@
-﻿namespace ShoeStore.Entities
+﻿namespace ShoeStore.Core.Entities
 {
     public class Provider
     {

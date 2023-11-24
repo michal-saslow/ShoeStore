@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Entities;
+using ShoeStore.Core.Entities;
+using ShoeStore.Core.Services;
+using ShoeStore.Service;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,26 +12,26 @@ namespace ShoeStore.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IOrderService _serviceOrder;
         public static int id = 0;
-        public OrdersController(DataContext context)
+        public OrdersController(IOrderService serviceOrder)
         {
-            _context = context;
+            _serviceOrder = serviceOrder;
         }
         // GET: api/<OrdersController>
         [HttpGet]
         public ActionResult<IEnumerable<Order>> Get()
         {
-            if (_context.orders == null)
+            if (_serviceOrder.GetOrders() == null)
                 return NotFound();
-            return _context.orders;
+            return _serviceOrder.GetOrders();
         }
 
         // GET api/<OrdersController>/5
         [HttpGet("{id}")]
         public ActionResult<Order> Get(int id)
         {
-            var order = _context.orders.Find(x => x.Id == id);
+            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
             if (order == null)
                 return NotFound();
             return order;
@@ -40,7 +43,7 @@ namespace ShoeStore.Controllers
         {
             id++;
             o.Id = id;
-            _context.orders.Add(o);
+            _serviceOrder.GetOrders().Add(o);
             return Ok();
         }
 
@@ -48,12 +51,12 @@ namespace ShoeStore.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Order o)
         {
-            var order = _context.orders.Find(x => x.Id == id);
+            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
             if (order == null)
                 return NotFound(id);
             o.Id = order.Id;
-            _context.orders.Remove(order);
-            _context.orders.Add(o);
+            _serviceOrder.GetOrders().Remove(order);
+            _serviceOrder.GetOrders().Add(o);
             return Ok();
         }
 
@@ -61,10 +64,10 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var order = _context.orders.Find(x => x.Id == id);
+            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
             if (order == null)
                 return NotFound();
-            _context.orders.Remove(order);
+            _serviceOrder.GetOrders().Remove(order);
             return Ok();
         }
     }

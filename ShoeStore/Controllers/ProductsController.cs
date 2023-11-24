@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Entities;
+using ShoeStore.Core.Entities;
+using ShoeStore.Core.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,26 +10,26 @@ namespace ShoeStore.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IProductService _serviceProduct;
         public static int id = 0;
-        public ProductsController(DataContext context)
+        public ProductsController(IProductService serviceProduct)
         {
-            _context = context;
+            _serviceProduct = serviceProduct;
         }
         // GET: api/<ProductsController>
         [HttpGet]
         public ActionResult<IEnumerable<Product>> Get()
         {
-            if (_context.products == null)
+            if (_serviceProduct.GetProduct() == null)
                 return NotFound();
-            return _context.products;
+            return _serviceProduct.GetProduct();
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public ActionResult<Product> Get(int id)
         {
-            var product = _context.products.Find(x => x.Id == id);
+            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
             if (product == null)
                 return NotFound();
             return product;
@@ -40,7 +41,7 @@ namespace ShoeStore.Controllers
         {
             id++;
             p.Id = id;
-            _context.products.Add(p);
+            _serviceProduct.GetProduct().Add(p);
             return Ok();
         }
 
@@ -48,12 +49,12 @@ namespace ShoeStore.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Product p)
         {
-            var product = _context.products.Find(x => x.Id == id);
+            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
             if (product == null)
                 return NotFound(id);
             p.Id = product.Id;
-            _context.products.Remove(product);
-            _context.products.Add(p);
+            _serviceProduct.GetProduct().Remove(product);
+            _serviceProduct.GetProduct().Add(p);
             return Ok();
         }
 
@@ -61,10 +62,10 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var product = _context.products.Find(x => x.Id == id);
+            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
             if (product == null)
                 return NotFound();
-            _context.products.Remove(product);
+            _serviceProduct.GetProduct().Remove(product);
             return Ok();
         }
     }
