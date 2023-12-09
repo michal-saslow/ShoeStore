@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Core.Entities;
 using ShoeStore.Core.Services;
+using ShoeStore.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,7 +12,6 @@ namespace ShoeStore.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _serviceProduct;
-        public static int id = 0;
         public ProductsController(IProductService serviceProduct)
         {
             _serviceProduct = serviceProduct;
@@ -29,7 +29,7 @@ namespace ShoeStore.Controllers
         [HttpGet("{id}")]
         public ActionResult<Product> Get(int id)
         {
-            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
+            var product = _serviceProduct.GetProductById(id);
             if (product == null)
                 return NotFound();
             return product;
@@ -39,9 +39,7 @@ namespace ShoeStore.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Product p)
         {
-            id++;
-            p.Id = id;
-            _serviceProduct.GetProduct().Add(p);
+            _serviceProduct.PostProduct(p);
             return Ok();
         }
 
@@ -49,12 +47,7 @@ namespace ShoeStore.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Product p)
         {
-            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
-            if (product == null)
-                return NotFound(id);
-            p.Id = product.Id;
-            _serviceProduct.GetProduct().Remove(product);
-            _serviceProduct.GetProduct().Add(p);
+            _serviceProduct.PutProduct(id, p);
             return Ok();
         }
 
@@ -62,10 +55,7 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var product = _serviceProduct.GetProduct().Find(x => x.Id == id);
-            if (product == null)
-                return NotFound();
-            _serviceProduct.GetProduct().Remove(product);
+            _serviceProduct.DeleteProduct(id);
             return Ok();
         }
     }

@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IOrderService, ServiceOrder>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ServiceProduct>();
 builder.Services.AddScoped<IProviderService, ShoeStore.Service.ServiceProvider>();
 builder.Services.AddScoped<IOrderRepository, OrderRpository>();

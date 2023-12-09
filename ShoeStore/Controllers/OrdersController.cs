@@ -13,7 +13,7 @@ namespace ShoeStore.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _serviceOrder;
-        public static int id = 0;
+        
         public OrdersController(IOrderService serviceOrder)
         {
             _serviceOrder = serviceOrder;
@@ -31,8 +31,8 @@ namespace ShoeStore.Controllers
         [HttpGet("{id}")]
         public ActionResult<Order> Get(int id)
         {
-            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
-            if (order == null)
+            var order = _serviceOrder.GetOrderById(id);
+            if (order==null)
                 return NotFound();
             return order;
         }
@@ -41,9 +41,7 @@ namespace ShoeStore.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Order o)
         {
-            id++;
-            o.Id = id;
-            _serviceOrder.GetOrders().Add(o);
+            _serviceOrder.PostOrder(o);
             return Ok();
         }
 
@@ -51,12 +49,7 @@ namespace ShoeStore.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Order o)
         {
-            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
-            if (order == null)
-                return NotFound(id);
-            o.Id = order.Id;
-            _serviceOrder.GetOrders().Remove(order);
-            _serviceOrder.GetOrders().Add(o);
+            _serviceOrder.PutOrder(id,o);
             return Ok();
         }
 
@@ -64,10 +57,7 @@ namespace ShoeStore.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var order = _serviceOrder.GetOrders().Find(x => x.Id == id);
-            if (order == null)
-                return NotFound();
-            _serviceOrder.GetOrders().Remove(order);
+            _serviceOrder.DeleteOrder(id);
             return Ok();
         }
     }

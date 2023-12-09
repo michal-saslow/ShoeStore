@@ -20,5 +20,23 @@ namespace ShoeStore.Data.RepositoryData
         {
             return _context.products;
         }
+        public void PostProduct(Product product)
+        {
+            _context.products.Add(product);
+        }
+        public void DeleteProduct(Product product)
+        {
+            _context.products.Remove(product);
+        }
+        public Product GetProductById(int id)
+        {
+            var product = _context.products.Find(x => x.Id == id);
+            return product;
+        }
+        public void PutProduct(Product product, Product product2)
+        {
+            _context.products.Remove(product);
+            _context.products.Add(product2);
+        }
     }
 }

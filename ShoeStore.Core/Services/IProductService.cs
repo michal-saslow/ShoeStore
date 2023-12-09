@@ -10,5 +10,9 @@ namespace ShoeStore.Core.Services
     public interface IProductService
     {
         List<Product> GetProduct();
+        void PostProduct(Product product);
+        void DeleteProduct(int id);
+        Product GetProductById(int id);
+        void PutProduct(int id, Product product);
     }
 }
