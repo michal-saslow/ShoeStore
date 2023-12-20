@@ -19,7 +19,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public List<Provider> GetProviders()
         {
-            return _context.providers;
+            return _context.providers.ToList();
         }
         public void PostProvider(Provider provider)
         {
@@ -31,7 +31,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public Provider GetProviderById(int id)
         {
-            var provider = _context.providers.Find(x => x.Id == id);
+            var provider = _context.providers.ToList().Find(x => x.Id == id);
             return provider;
         }
         public void PutProvider(Provider provider, Provider provider2)

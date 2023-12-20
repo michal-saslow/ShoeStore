@@ -18,7 +18,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public List<Order> GetOrders()
         {
-            return _context.orders;
+            return _context.orders.ToList();
         }
         public void PostOrder(Order order)
         {
@@ -35,7 +35,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public Order GetOrderById(int id)
         {
-            var order = _context.orders.Find(x => x.Id == id);
+            var order = _context.orders.ToList().Find(x => x.Id == id);
             return order;
         }
     }

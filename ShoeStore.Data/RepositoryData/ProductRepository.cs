@@ -18,7 +18,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public List<Product> GetProducts()
         {
-            return _context.products;
+            return _context.products.ToList();
         }
         public void PostProduct(Product product)
         {
@@ -30,7 +30,7 @@ namespace ShoeStore.Data.RepositoryData
         }
         public Product GetProductById(int id)
         {
-            var product = _context.products.Find(x => x.Id == id);
+            var product = _context.products.ToList().Find(x => x.Id == id);
             return product;
         }
         public void PutProduct(Product product, Product product2)
