@@ -17,22 +17,18 @@ namespace ShoeStore.Service
         {
             return _repositoryOrder.GetOrders();
         }
-        public void PostOrder(Order order)
-        {
-            id++;
-            order.Id = id;
-            _repositoryOrder.PostOrder(order);
+        public Order Add(Order order)
+        { 
+           return _repositoryOrder.Add(order);
         }
-        public void PutOrder(int id, Order o)
+        
+        public Order Update(int id, Order order)
         {
-            var order = _repositoryOrder.GetOrders().Find(x => x.Id == id);
-            o.Id = order.Id;
-            _repositoryOrder.PutOrder(order, o);
+            return _repositoryOrder.Update(id, order);
         }
-        public void DeleteOrder(int id)
+        public void Delete(int id)
         {
-            var order = _repositoryOrder.GetOrders().Find(x => x.Id == id);
-            _repositoryOrder.DeleteOrder(order);
+            _repositoryOrder.Delete(id);
         }
         public Order GetOrderById(int id)
         {

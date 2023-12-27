@@ -10,9 +10,9 @@ namespace ShoeStore.Core.Repository
     public interface IProductRepository
     {
         List<Product> GetProducts();
-        void PostProduct(Product product);
-        void DeleteProduct(Product product);
+        Product Add(Product product);
+        void Delete(int id);
         Product GetProductById(int id);
-        void PutProduct(Product product, Product product2);
+        Product Update(int id, Product product);
     }
 }

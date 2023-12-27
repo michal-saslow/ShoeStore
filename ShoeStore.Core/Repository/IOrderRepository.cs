@@ -10,9 +10,13 @@ namespace ShoeStore.Core.Repository
     public interface IOrderRepository
     {
         List<Order> GetOrders();
-        void PostOrder(Order order);
-        void DeleteOrder(Order order);
+
+        Order Add(Order order);
+
+        void Delete(int id);
+
         Order GetOrderById(int id);
-        void PutOrder(Order order, Order order2);
+
+        Order Update(int id, Order order);
     }
 }

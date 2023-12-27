@@ -10,9 +10,9 @@ namespace ShoeStore.Core.Services
     public interface IProviderService
     {
         List<Provider> GetProvider();
-        void PostProvider(Provider provider);
-        void DeleteProvider(int id);
+        Provider Add(Provider provider);
+        void Delete(int id);
         Provider GetProviderById(int id);
-        void PutProvider(int id, Provider provider);
+        Provider Update(int id, Provider provider);
     }
 }
