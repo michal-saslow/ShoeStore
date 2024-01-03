@@ -15,24 +15,21 @@ namespace ShoeStore.Service
         {
             return _repositoryProvider.GetProviders();
         }
-        public void PostProvider(Provider provider)
+        public Provider Add(Provider provider)
         {
-            _repositoryProvider.PostProvider(provider);
+            return _repositoryProvider.Add(provider);
         }
-        public void DeleteProvider(int id)
+        public void Delete(int id)
         {
-            var provider = _repositoryProvider.GetProviders().Find(x => x.Id == id);
-            _repositoryProvider.DeleteProvider(provider);
+            _repositoryProvider.Delete(id);
         }
         public Provider GetProviderById(int id)
         {
             return _repositoryProvider.GetProviderById(id);
         }
-        public void PutProvider(int id, Provider p)
+        public Provider Update(int id, Provider p)
         {
-            var provider = _repositoryProvider.GetProviders().Find(x => x.Id == id);
-            p.Id = provider.Id;
-            _repositoryProvider.PutProvider(provider, p);
+            return _repositoryProvider.Update(id, p);
         }
     }
 }

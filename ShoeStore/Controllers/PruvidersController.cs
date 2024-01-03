@@ -29,34 +29,35 @@ namespace ShoeStore.Controllers
         [HttpGet("{id}")]
         public ActionResult<Provider> Get(int id)
         {
-            var provider = _serviceProvider.GetProviderById(id);
-            if (provider == null)
-                return NotFound();
-            return provider;
+           return _serviceProvider.GetProviderById(id);
         }
 
         // POST api/<PruvidersController>
         [HttpPost]
         public ActionResult Post([FromBody] Provider p)
         {
-            _serviceProvider.PostProvider(p);
-            return Ok();
+            return Ok(_serviceProvider.Add(p));
         }
 
         // PUT api/<PruvidersController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Provider p)
         {
-            _serviceProvider.PutProvider(id, p);
-            return Ok();
+            return Ok(_serviceProvider.Update(id, p));
         }
 
         // DELETE api/<PruvidersController>/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            _serviceProvider.DeleteProvider(id);
-            return Ok();
+            var provider = _serviceProvider.GetProviderById(id);
+            if (provider is null)
+            {
+                return NotFound();
+            }
+
+            _serviceProvider.Delete(id);
+            return NoContent();
         }
     }
 }

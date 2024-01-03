@@ -16,26 +16,21 @@ namespace ShoeStore.Service
         {
             return _repositoryProduct.GetProducts();
         }
-        public void PostProduct(Product product)
+        public Product Add(Product product)
         {
-            id++;
-            product.Id = id;
-            _repositoryProduct.PostProduct(product);
+            return _repositoryProduct.Add(product);
         }
-        public void DeleteProduct(int id)
+        public void Delete(int id)
         {
-            var product = _repositoryProduct.GetProducts().Find(x => x.Id == id);
-            _repositoryProduct.DeleteProduct(product);
+            _repositoryProduct.Delete(id);
         }
         public Product GetProductById(int id)
         {
             return _repositoryProduct.GetProductById(id);
         }
-        public void PutProduct(int id, Product p)
+        public Product Update(int id, Product p)
         {
-            var product = _repositoryProduct.GetProducts().Find(x => x.Id == id);
-            p.Id = product.Id;
-            _repositoryProduct.PutProduct(product, p);
+           return _repositoryProduct.Update(id, p);
         }
         
     }

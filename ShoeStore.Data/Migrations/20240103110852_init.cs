@@ -4,7 +4,7 @@
 
 namespace ShoeStore.Data.Migrations
 {
-    public partial class createDb : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,33 +44,36 @@ namespace ShoeStore.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProviderId = table.Column<int>(type: "int", nullable: true),
-                    ProductId = table.Column<int>(type: "int", nullable: true)
+                    count = table.Column<int>(type: "int", nullable: false),
+                    providerId = table.Column<int>(type: "int", nullable: false),
+                    productId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_orders_products_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_orders_products_productId",
+                        column: x => x.productId,
                         principalTable: "products",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_orders_providers_ProviderId",
-                        column: x => x.ProviderId,
+                        name: "FK_orders_providers_providerId",
+                        column: x => x.providerId,
                         principalTable: "providers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_ProductId",
+                name: "IX_orders_productId",
                 table: "orders",
-                column: "ProductId");
+                column: "productId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_ProviderId",
+                name: "IX_orders_providerId",
                 table: "orders",
-                column: "ProviderId");
+                column: "providerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

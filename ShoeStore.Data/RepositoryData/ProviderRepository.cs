@@ -21,23 +21,30 @@ namespace ShoeStore.Data.RepositoryData
         {
             return _context.providers.ToList();
         }
-        public void PostProvider(Provider provider)
+        public Provider Add(Provider provider)
         {
             _context.providers.Add(provider);
+            _context.SaveChanges();
+            return provider;
         }
-        public void DeleteProvider(Provider provider)
+        public void Delete(int id)
         {
+            var provider = GetProviderById(id);
             _context.providers.Remove(provider);
+            _context.SaveChanges();
         }
         public Provider GetProviderById(int id)
         {
-            var provider = _context.providers.ToList().Find(x => x.Id == id);
-            return provider;
+            return _context.providers.Find(id);
         }
-        public void PutProvider(Provider provider, Provider provider2)
+        public Provider Update(int id,Provider provider)
         {
-            _context.providers.Remove(provider);
-            _context.providers.Add(provider2);
+            var existProvider = GetProviderById(id);
+            existProvider.Name = provider.Name;
+            existProvider.Phone=provider.Phone;
+            existProvider.Email=provider.Email;
+            _context.SaveChanges();
+            return existProvider;
         }
     }
 }

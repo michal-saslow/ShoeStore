@@ -10,10 +10,10 @@ namespace ShoeStore.Core.Services
     public interface IOrderService
     {
         List<Order> GetOrders();
-        void PostOrder(Order order);
-        void DeleteOrder(int id);
+        Order Add(Order order);
+        void Delete(int id);
         Order GetOrderById(int id);
-        void PutOrder(int id, Order order);
+        Order Update(int id, Order order);
 
     }
 }

@@ -39,24 +39,28 @@ namespace ShoeStore.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Product p)
         {
-            _serviceProduct.PostProduct(p);
-            return Ok();
+            return Ok(_serviceProduct.Add(p));
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Product p)
         {
-            _serviceProduct.PutProduct(id, p);
-            return Ok();
+            return Ok(_serviceProduct.Update(id, p));
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            _serviceProduct.DeleteProduct(id);
-            return Ok();
+            var product = _serviceProduct.GetProductById(id);
+            if (product is null)
+            {
+                return NotFound();
+            }
+
+            _serviceProduct.Delete(id);
+            return NoContent();
         }
     }
 }

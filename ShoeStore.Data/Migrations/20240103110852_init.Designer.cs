@@ -12,8 +12,8 @@ using ShoeStore.Date;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231220181239_createDb")]
-    partial class createDb
+    [Migration("20240103110852_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,17 +32,20 @@ namespace ShoeStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("count")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProviderId")
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("providerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("productId");
 
-                    b.HasIndex("ProviderId");
+                    b.HasIndex("providerId");
 
                     b.ToTable("orders");
                 });
@@ -95,11 +98,15 @@ namespace ShoeStore.Data.Migrations
                 {
                     b.HasOne("ShoeStore.Core.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ShoeStore.Core.Entities.Provider", "Provider")
                         .WithMany()
-                        .HasForeignKey("ProviderId");
+                        .HasForeignKey("providerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 

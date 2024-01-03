@@ -20,23 +20,29 @@ namespace ShoeStore.Data.RepositoryData
         {
             return _context.orders.ToList();
         }
-        public void PostOrder(Order order)
+        public Order Add(Order order)
         {
             _context.orders.Add(order);
+            _context.SaveChanges();
+            return order;
         }
-        public void DeleteOrder(Order order)
+        public void Delete(int id)
         {
+            var order = GetOrderById(id);
             _context.orders.Remove(order);
+            _context.SaveChanges();
         }
-        public void PutOrder(Order order, Order order2)
+        public Order Update(int id, Order order)
         {
-            _context.orders.Remove(order);
-            _context.orders.Add(order2);
+            var existOrder=GetOrderById(id);
+            existOrder.Product=order.Product;
+            existOrder.Provider=order.Provider;
+            _context.SaveChanges();
+            return existOrder;
         }
         public Order GetOrderById(int id)
         {
-            var order = _context.orders.ToList().Find(x => x.Id == id);
-            return order;
+            return _context.orders.Find(id);
         }
     }
 }
