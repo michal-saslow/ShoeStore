@@ -1,4 +1,6 @@
 
+using ShoeStore.Api.Mapping;
+using ShoeStore.Core.Mapping;
 using ShoeStore.Core.Repository;
 using ShoeStore.Core.Services;
 using ShoeStore.Data.RepositoryData;
@@ -20,7 +22,7 @@ builder.Services.AddScoped<IOrderRepository, OrderRpository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
 builder.Services.AddDbContext<DataContext>();
-
+builder.Services.AddAutoMapper(typeof(ApiMappingProfile),typeof(MappingProfile));
 
 
 

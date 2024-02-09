@@ -44,36 +44,36 @@ namespace ShoeStore.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    count = table.Column<int>(type: "int", nullable: false),
-                    providerId = table.Column<int>(type: "int", nullable: false),
-                    productId = table.Column<int>(type: "int", nullable: false)
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    ProviderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_orders_products_productId",
-                        column: x => x.productId,
+                        name: "FK_orders_products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_orders_providers_providerId",
-                        column: x => x.providerId,
+                        name: "FK_orders_providers_ProviderId",
+                        column: x => x.ProviderId,
                         principalTable: "providers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_productId",
+                name: "IX_orders_ProductId",
                 table: "orders",
-                column: "productId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_orders_providerId",
+                name: "IX_orders_ProviderId",
                 table: "orders",
-                column: "providerId");
+                column: "ProviderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
