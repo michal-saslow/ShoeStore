@@ -22,51 +22,51 @@ namespace ShoeStore.Controllers
         }
         // GET: api/<PruvidersController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var providers = _serviceProvider.GetProvider();
+            var providers = await _serviceProvider.GetProviderAsync();
             var providersDto=_mapper.Map<IEnumerable<ProviderDto>>(providers);
             return Ok(providersDto);
         }
 
         // GET api/<PruvidersController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-           var provider= _serviceProvider.GetProviderById(id);
+           var provider= await _serviceProvider.GetProviderByIdAsync(id);
            var providerDto= _mapper.Map<ProviderDto>(provider);
            return Ok(providerDto);
         }
 
         // POST api/<PruvidersController>
         [HttpPost]
-        public ActionResult Post([FromBody] ProviderPostModel p)
+        public async Task<ActionResult> Post([FromBody] ProviderPostModel p)
         {
             var providerToAdd=_mapper.Map<Provider>(p);
-            var newProvider = _serviceProvider.Add(providerToAdd);
+            var newProvider = await _serviceProvider.AddAsync(providerToAdd);
             return Ok(_mapper.Map<ProviderDto>(newProvider));
         }
 
         // PUT api/<PruvidersController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] ProviderPostModel p)
+        public async Task<ActionResult> Put(int id, [FromBody] ProviderPostModel p)
         {
             var providerToUpdate=_mapper.Map<Provider>(p);
-            var updateProvider = _serviceProvider.Update(id, providerToUpdate);
+            var updateProvider = await _serviceProvider.UpdateAsync(id, providerToUpdate);
             return Ok(_mapper.Map<ProviderDto>(updateProvider));
         }
 
         // DELETE api/<PruvidersController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var provider = _serviceProvider.GetProviderById(id);
+            var provider = await _serviceProvider.GetProviderByIdAsync(id);
             if (provider is null)
             {
                 return NotFound();
             }
 
-            _serviceProvider.Delete(id);
+            await _serviceProvider.DeleteAsync(id);
             return NoContent();
         }
     }

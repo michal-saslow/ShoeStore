@@ -22,51 +22,51 @@ namespace ShoeStore.Controllers
         }
         // GET: api/<ProductsController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var products = _serviceProduct.GetProduct();
+            var products = await _serviceProduct.GetProductAsync();
             var productsDto=_mapper.Map<IEnumerable<ProductDto>>(products);
             return Ok(productsDto);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var product = _serviceProduct.GetProductById(id);
+            var product = await _serviceProduct.GetProductByIdAsync(id);
             var productDto=_mapper.Map<ProductDto>(product);
            return Ok(productDto);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public ActionResult Post([FromBody] ProductPostModel p)
+        public async Task<ActionResult> Post([FromBody] ProductPostModel p)
         {
             var productToAdd=_mapper.Map<Product>(p);
-            var newProduct = _serviceProduct.Add(productToAdd);
+            var newProduct = await _serviceProduct.AddAsync(productToAdd);
             return Ok(_mapper.Map<ProductDto>(newProduct));
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Product p)
+        public async Task<ActionResult> Put(int id, [FromBody] Product p)
         {
             var productToUpdate=_mapper.Map<Product>(p);
-            var updateProduct = _serviceProduct.Update(id, productToUpdate);
+            var updateProduct = await _serviceProduct.UpdateAsync(id, productToUpdate);
             return Ok(_mapper.Map<ProductDto>(updateProduct));
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var product = _serviceProduct.GetProductById(id);
+            var product = await _serviceProduct.GetProductByIdAsync(id);
             if (product is null)
             {
                 return NotFound();
             }
 
-            _serviceProduct.Delete(id);
+            await _serviceProduct.DeleteAsync(id);
             return NoContent();
         }
     }

@@ -12,7 +12,7 @@ using ShoeStore.Date;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240207180540_init")]
+    [Migration("20240221164946_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

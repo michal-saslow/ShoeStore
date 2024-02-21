@@ -1,4 +1,5 @@
-﻿using ShoeStore.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoeStore.Core.Entities;
 using ShoeStore.Core.Repository;
 using ShoeStore.Date;
 using System;
@@ -16,33 +17,33 @@ namespace ShoeStore.Data.RepositoryData
         {
             _context = context;
         }
-        public List<Product> GetProducts()
+        public async Task<List<Product>> GetProductsAsync()
         {
-            return _context.products.ToList();
+            return await _context.products.ToListAsync();
         }
-        public Product Add(Product product)
+        public async Task<Product> AddAsync(Product product)
         {
             _context.products.Add(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return product;
         }
-        public void Delete( int id)
+        public async Task DeleteAsync( int id)
         {
-            var product= GetProductById(id);
+            var product= await GetProductByIdAsync(id);
             _context.products.Remove(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
-            return _context.products.Find(id);
+            return await _context.products.FindAsync(id);
         }
-        public Product Update(int id, Product product)
+        public async Task<Product> UpdateAsync(int id, Product product)
         {
-            var existProduct=GetProductById(id);
+            var existProduct=await GetProductByIdAsync(id);
             existProduct.Name = product.Name;
             existProduct.CountUnitsInStock=product.CountUnitsInStock;
             existProduct.Company=product.Company;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return existProduct;
         }
     }

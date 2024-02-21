@@ -11,25 +11,25 @@ namespace ShoeStore.Service
         {
             _repositoryProvider = repositoryProvider;
         }
-        public List<Provider> GetProvider()
+        public async Task<List<Provider>> GetProviderAsync()
         {
-            return _repositoryProvider.GetProviders();
+            return await _repositoryProvider.GetProvidersAsync();
         }
-        public Provider Add(Provider provider)
+        public async Task<Provider> AddAsync(Provider provider)
         {
-            return _repositoryProvider.Add(provider);
+            return await _repositoryProvider.AddAsync(provider);
         }
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _repositoryProvider.Delete(id);
+            await _repositoryProvider.DeleteAsync(id);
         }
-        public Provider GetProviderById(int id)
+        public async Task<Provider> GetProviderByIdAsync(int id)
         {
-            return _repositoryProvider.GetProviderById(id);
+            return await _repositoryProvider.GetProviderByIdAsync(id);
         }
-        public Provider Update(int id, Provider p)
+        public async Task<Provider> UpdateAsync(int id, Provider p)
         {
-            return _repositoryProvider.Update(id, p);
+            return await _repositoryProvider.UpdateAsync(id, p);
         }
     }
 }

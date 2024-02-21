@@ -1,4 +1,5 @@
-﻿using ShoeStore.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoeStore.Core.Entities;
 using ShoeStore.Core.Repository;
 using ShoeStore.Date;
 using System;
@@ -16,33 +17,34 @@ namespace ShoeStore.Data.RepositoryData
         {
             _context = context;
         }
-        public List<Order> GetOrders()
+        public async Task<List<Order>> GetOrdersAsync()
         {
-            return _context.orders.ToList();
+            return await _context.orders.ToListAsync();
         }
-        public Order Add(Order order)
+        public async Task<Order> AddAsync(Order order)
         {
             _context.orders.Add(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return order;
         }
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var order = GetOrderById(id);
+            var order = await GetOrderByIdAsync(id);
             _context.orders.Remove(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public Order Update(int id, Order order)
+        public async Task<Order> UpdateAsync(int id, Order order)
         {
-            var existOrder=GetOrderById(id);
+            var existOrder= await GetOrderByIdAsync(id);
             existOrder.Product=order.Product;
             existOrder.Provider=order.Provider;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return existOrder;
         }
-        public Order GetOrderById(int id)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
-            return _context.orders.Find(id);
+            return  await _context.orders.FirstAsync(u => u.Id == id);
         }
+
     }
 }

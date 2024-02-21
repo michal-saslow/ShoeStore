@@ -24,51 +24,50 @@ namespace ShoeStore.Controllers
         }
         // GET: api/<OrdersController>
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var orders = _serviceOrder.GetOrders();
+            var orders = await _serviceOrder.GetOrdersAsync();
             var ordersDto=_mapper.Map<IEnumerable<OrderDto>>(orders);
             return Ok(ordersDto);
         }
 
         // GET api/<OrdersController>/5
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
-            var order = _serviceOrder.GetOrderById(id);
+            var order = await _serviceOrder.GetOrderByIdAsync(id);
             var orderDto=_mapper.Map<OrderDto>(order);
             return Ok(orderDto);
         }
 
         // POST api/<OrdersController>
         [HttpPost]
-        public ActionResult Post([FromBody] OrderPostModel order)
+        public async Task<ActionResult> Post([FromBody] OrderPostModel order)
         {
             var orderToAdd=_mapper.Map<Order>(order);
-            var newOrder = _serviceOrder.Add(orderToAdd);
+            var newOrder = await _serviceOrder.AddAsync(orderToAdd);
             return Ok(_mapper.Map<OrderDto>(newOrder));
         }
 
         // PUT api/<OrdersController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] OrderPostModel order)
+        public async Task<ActionResult> Put(int id, [FromBody] OrderPostModel order)
         {
             var orderToUpdate= _mapper.Map<Order>(order);
-            var updateOrder=_serviceOrder.Update(id, orderToUpdate);
+            var updateOrder=await _serviceOrder.UpdateAsync(id, orderToUpdate);
             return Ok(_mapper.Map<OrderDto>(updateOrder));
         }
 
         // DELETE api/<OrdersController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var order = _serviceOrder.GetOrderById(id);
+            var order = await _serviceOrder.GetOrderByIdAsync(id);
             if (order is null)
             {
                 return NotFound();
             }
-
-            _serviceOrder.Delete(id);
+            await _serviceOrder.DeleteAsync(id);
             return NoContent();
         }
     }

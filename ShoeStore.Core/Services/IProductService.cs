@@ -9,10 +9,10 @@ namespace ShoeStore.Core.Services
 {
     public interface IProductService
     {
-        List<Product> GetProduct();
-        Product Add(Product product);
-        void Delete(int id);
-        Product GetProductById(int id);
-        Product Update(int id, Product product);
+        Task<List<Product>> GetProductAsync();
+        Task<Product> AddAsync(Product product);
+        Task DeleteAsync(int id);
+        Task<Product> GetProductByIdAsync(int id);
+        Task<Product> UpdateAsync(int id, Product product);
     }
 }

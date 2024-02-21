@@ -8,31 +8,30 @@ namespace ShoeStore.Service
     {
         private readonly IOrderRepository _repositoryOrder;
 
-        public static int id=0;
         public ServiceOrder(IOrderRepository repositoryOrder)
         {
             _repositoryOrder = repositoryOrder;
         }
-        public List<Order> GetOrders()
+        public async Task<List<Order>> GetOrdersAsync()
         {
-            return _repositoryOrder.GetOrders();
+            return await _repositoryOrder.GetOrdersAsync();
         }
-        public Order Add(Order order)
+        public async Task<Order> AddAsync(Order order)
         { 
-           return _repositoryOrder.Add(order);
+           return await _repositoryOrder.AddAsync(order);
         }
         
-        public Order Update(int id, Order order)
+        public async Task<Order> UpdateAsync(int id, Order order)
         {
-            return _repositoryOrder.Update(id, order);
+            return await _repositoryOrder.UpdateAsync(id, order);
         }
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _repositoryOrder.Delete(id);
+            await _repositoryOrder.DeleteAsync(id);
         }
-        public Order GetOrderById(int id)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
-            return _repositoryOrder.GetOrderById(id);
+            return await _repositoryOrder.GetOrderByIdAsync(id);
         } 
     }
 }

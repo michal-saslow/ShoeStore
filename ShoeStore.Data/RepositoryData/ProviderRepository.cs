@@ -1,4 +1,5 @@
-﻿using ShoeStore.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoeStore.Core.Entities;
 using ShoeStore.Core.Repository;
 using ShoeStore.Date;
 using System;
@@ -17,33 +18,33 @@ namespace ShoeStore.Data.RepositoryData
         {
             _context = context;
         }
-        public List<Provider> GetProviders()
+        public async Task<List<Provider>> GetProvidersAsync()
         {
-            return _context.providers.ToList();
+            return await _context.providers.ToListAsync();
         }
-        public Provider Add(Provider provider)
+        public async Task<Provider> AddAsync(Provider provider)
         {
             _context.providers.Add(provider);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return provider;
         }
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var provider = GetProviderById(id);
+            var provider = await GetProviderByIdAsync(id);
             _context.providers.Remove(provider);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public Provider GetProviderById(int id)
+        public async Task<Provider> GetProviderByIdAsync(int id)
         {
-            return _context.providers.Find(id);
+            return await _context.providers.FindAsync(id);
         }
-        public Provider Update(int id,Provider provider)
+        public async Task<Provider> UpdateAsync(int id,Provider provider)
         {
-            var existProvider = GetProviderById(id);
+            var existProvider = await GetProviderByIdAsync(id);
             existProvider.Name = provider.Name;
             existProvider.Phone=provider.Phone;
             existProvider.Email=provider.Email;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return existProvider;
         }
     }

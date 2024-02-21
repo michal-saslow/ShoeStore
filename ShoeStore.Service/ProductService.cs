@@ -12,25 +12,25 @@ namespace ShoeStore.Service
         {
             _repositoryProduct=repositoryProduct;
         }
-        public List<Product> GetProduct()
+        public async Task<List<Product>> GetProductAsync()
         {
-            return _repositoryProduct.GetProducts();
+            return await _repositoryProduct.GetProductsAsync();
         }
-        public Product Add(Product product)
+        public async Task<Product> AddAsync(Product product)
         {
-            return _repositoryProduct.Add(product);
+            return await _repositoryProduct.AddAsync(product);
         }
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            _repositoryProduct.Delete(id);
+            await _repositoryProduct.DeleteAsync(id);
         }
-        public Product GetProductById(int id)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
-            return _repositoryProduct.GetProductById(id);
+            return await _repositoryProduct.GetProductByIdAsync(id);
         }
-        public Product Update(int id, Product p)
+        public async Task<Product> UpdateAsync(int id, Product p)
         {
-           return _repositoryProduct.Update(id, p);
+           return await _repositoryProduct.UpdateAsync(id, p);
         }
         
     }
