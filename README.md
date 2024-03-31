@@ -9,7 +9,7 @@ get(id)-    https://shosesStore/api/products/{id}                 ----מחזיר
 post-        https://shosesStore/api/products                         ----מוסיף מוצר  
 put-          https://shosesStore/api/products/{id}                  ----מעדכן מוצר מסוים  
 delete-    https://shosesStore/api/products/{id}                  ----מוחק מוצר מסוים  
-put(cnt)   https://shosesStore/api/products/{id}/cnt          ----מעדכן את כמות במלאי של מוצר מסוים  
+put(cnt)   https://shosesStore/api/products/{id}/cnt          ----מעדכן   את כמות במלאי של מוצר מסוים  
 table 2: orders  
 רשימת ההזמנות: Id,Pruviders,Product  
 get-          https://shosesStore/api/orders                        ----מחזיר את כל רשימת ההזמנות  
